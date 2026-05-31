@@ -1,0 +1,394 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Where the giants lie",
+    "subtitle": [
+      "The ten largest national parks, drawn as circles sized by area at their approximate centre.",
+      "Hover a park to focus it."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 680,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/australia-states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#eef0e6",
+        "stroke": "#d4cdbc",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "park": "Munga-Thirri–Simpson Desert",
+            "state": "SA",
+            "km2": 36000,
+            "lon": 137.0,
+            "lat": -25.5,
+            "ldx": 34,
+            "ldy": -4,
+            "side": "left"
+          },
+          {
+            "park": "Kakadu",
+            "state": "NT",
+            "km2": 19804,
+            "lon": 132.5,
+            "lat": -13.0,
+            "ldx": 24,
+            "ldy": -6,
+            "side": "left"
+          },
+          {
+            "park": "Kati Thanda–Lake Eyre",
+            "state": "SA",
+            "km2": 13491,
+            "lon": 137.3,
+            "lat": -28.6,
+            "ldx": 24,
+            "ldy": 14,
+            "side": "left"
+          },
+          {
+            "park": "Judbarra / Gregory",
+            "state": "NT",
+            "km2": 12882,
+            "lon": 130.6,
+            "lat": -16.2,
+            "ldx": -22,
+            "ldy": -2,
+            "side": "right"
+          },
+          {
+            "park": "Karlamilyi",
+            "state": "WA",
+            "km2": 12830,
+            "lon": 122.0,
+            "lat": -22.5,
+            "ldx": -22,
+            "ldy": -2,
+            "side": "right"
+          },
+          {
+            "park": "Witjira",
+            "state": "SA",
+            "km2": 7770,
+            "lon": 135.6,
+            "lat": -26.5,
+            "ldx": -18,
+            "ldy": 16,
+            "side": "right"
+          },
+          {
+            "park": "Kosciuszko",
+            "state": "NSW",
+            "km2": 6900,
+            "lon": 148.3,
+            "lat": -36.4,
+            "ldx": 18,
+            "ldy": -6,
+            "side": "left"
+          },
+          {
+            "park": "Alpine",
+            "state": "VIC",
+            "km2": 6474,
+            "lon": 147.1,
+            "lat": -37.0,
+            "ldx": -18,
+            "ldy": 14,
+            "side": "right"
+          },
+          {
+            "park": "Karijini",
+            "state": "WA",
+            "km2": 6274,
+            "lon": 118.3,
+            "lat": -22.4,
+            "ldx": -18,
+            "ldy": -2,
+            "side": "right"
+          },
+          {
+            "park": "Southwest",
+            "state": "TAS",
+            "km2": 6183,
+            "lon": 146.3,
+            "lat": -43.1,
+            "ldx": 16,
+            "ldy": 10,
+            "side": "left"
+          }
+        ]
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon"
+        },
+        "latitude": {
+          "field": "lat"
+        }
+      },
+      "layer": [
+        {
+          "params": [
+            {
+              "name": "hoverPark",
+              "select": {
+                "type": "point",
+                "fields": [
+                  "park"
+                ],
+                "on": "pointerover",
+                "clear": "pointerout",
+                "nearest": true
+              }
+            }
+          ],
+          "mark": {
+            "type": "circle",
+            "stroke": "#fbf8f0",
+            "strokeWidth": 0.8
+          },
+          "encoding": {
+            "size": {
+              "field": "km2",
+              "type": "quantitative",
+              "title": "Park area (km²)",
+              "scale": {
+                "range": [
+                  80,
+                  2600
+                ]
+              },
+              "legend": {
+                "orient": "bottom-left",
+                "values": [
+                  6000,
+                  15000,
+                  36000
+                ],
+                "labelExpr": "format(datum.value/1000, '.0f') + ',000'",
+                "symbolFillColor": "#9a8f7a",
+                "symbolStrokeColor": "#fbf8f0"
+              }
+            },
+            "color": {
+              "field": "state",
+              "type": "nominal",
+              "title": "State / territory",
+              "scale": {
+                "domain": [
+                  "NSW",
+                  "VIC",
+                  "QLD",
+                  "SA",
+                  "WA",
+                  "TAS",
+                  "NT"
+                ],
+                "range": [
+                  "#2a6f97",
+                  "#5a8f3c",
+                  "#d98c2b",
+                  "#a23b2e",
+                  "#e3b23c",
+                  "#2f7d6f",
+                  "#6b4e8f"
+                ]
+              },
+              "legend": {
+                "orient": "top-right"
+              }
+            },
+            "opacity": {
+              "condition": {
+                "param": "hoverPark",
+                "value": 0.92
+              },
+              "value": 0.36
+            },
+            "tooltip": [
+              {
+                "field": "park",
+                "title": "National park"
+              },
+              {
+                "field": "state",
+                "title": "State / territory"
+              },
+              {
+                "field": "km2",
+                "title": "Area (km²)",
+                "format": ","
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.side == 'left'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "fontSize": 10.5,
+            "font": "Inter, sans-serif",
+            "fontWeight": 600,
+            "stroke": "#fbf8f0",
+            "strokeWidth": 3,
+            "fill": "#fbf8f0"
+          },
+          "encoding": {
+            "text": {
+              "field": "park"
+            },
+            "xOffset": {
+              "field": "ldx"
+            },
+            "yOffset": {
+              "field": "ldy"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.side == 'left'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "fontSize": 10.5,
+            "font": "Inter, sans-serif",
+            "fontWeight": 600,
+            "color": "#3a342b"
+          },
+          "encoding": {
+            "text": {
+              "field": "park"
+            },
+            "xOffset": {
+              "field": "ldx"
+            },
+            "yOffset": {
+              "field": "ldy"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.side == 'right'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "fontSize": 10.5,
+            "font": "Inter, sans-serif",
+            "fontWeight": 600,
+            "stroke": "#fbf8f0",
+            "strokeWidth": 3,
+            "fill": "#fbf8f0"
+          },
+          "encoding": {
+            "text": {
+              "field": "park"
+            },
+            "xOffset": {
+              "field": "ldx"
+            },
+            "yOffset": {
+              "field": "ldy"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.side == 'right'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "fontSize": 10.5,
+            "font": "Inter, sans-serif",
+            "fontWeight": 600,
+            "color": "#3a342b"
+          },
+          "encoding": {
+            "text": {
+              "field": "park"
+            },
+            "xOffset": {
+              "field": "ldx"
+            },
+            "yOffset": {
+              "field": "ldy"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5,
+      "padding": 6,
+      "rowPadding": 4
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 17,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

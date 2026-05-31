@@ -1,0 +1,757 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Two decades of rapid protection",
+    "subtitle": [
+      "Proportion of Australia's land and ocean inside",
+      "protected areas, 2004–2024 (ABS / CAPAD). Hover for",
+      "exact figures — a crosshair spans both lines."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 400,
+  "data": {
+    "values": [
+      {
+        "year": 2004,
+        "measure": "Land (terrestrial)",
+        "pct": 10.5
+      },
+      {
+        "year": 2006,
+        "measure": "Land (terrestrial)",
+        "pct": 11.6
+      },
+      {
+        "year": 2008,
+        "measure": "Land (terrestrial)",
+        "pct": 12.8
+      },
+      {
+        "year": 2010,
+        "measure": "Land (terrestrial)",
+        "pct": 13.4
+      },
+      {
+        "year": 2012,
+        "measure": "Land (terrestrial)",
+        "pct": 15.5
+      },
+      {
+        "year": 2014,
+        "measure": "Land (terrestrial)",
+        "pct": 17.9
+      },
+      {
+        "year": 2016,
+        "measure": "Land (terrestrial)",
+        "pct": 19.6
+      },
+      {
+        "year": 2018,
+        "measure": "Land (terrestrial)",
+        "pct": 19.7
+      },
+      {
+        "year": 2020,
+        "measure": "Land (terrestrial)",
+        "pct": 19.8
+      },
+      {
+        "year": 2022,
+        "measure": "Land (terrestrial)",
+        "pct": 22.1
+      },
+      {
+        "year": 2024,
+        "measure": "Land (terrestrial)",
+        "pct": 22.6
+      },
+      {
+        "year": 2008,
+        "measure": "Sea (marine)",
+        "pct": 10.0
+      },
+      {
+        "year": 2010,
+        "measure": "Sea (marine)",
+        "pct": 10.2
+      },
+      {
+        "year": 2012,
+        "measure": "Sea (marine)",
+        "pct": 36.4
+      },
+      {
+        "year": 2016,
+        "measure": "Sea (marine)",
+        "pct": 36.4
+      },
+      {
+        "year": 2018,
+        "measure": "Sea (marine)",
+        "pct": 36.7
+      },
+      {
+        "year": 2020,
+        "measure": "Sea (marine)",
+        "pct": 36.7
+      },
+      {
+        "year": 2022,
+        "measure": "Sea (marine)",
+        "pct": 45.0
+      },
+      {
+        "year": 2024,
+        "measure": "Sea (marine)",
+        "pct": 48.9
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "quantitative",
+      "title": null,
+      "axis": {
+        "format": "d",
+        "values": [
+          2004,
+          2008,
+          2012,
+          2016,
+          2020,
+          2024
+        ]
+      },
+      "scale": {
+        "domain": [
+          2003.5,
+          2025
+        ]
+      }
+    },
+    "y": {
+      "field": "pct",
+      "type": "quantitative",
+      "title": "% of area protected",
+      "scale": {
+        "domain": [
+          0,
+          55
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "color": {
+          "field": "measure",
+          "type": "nominal",
+          "title": "Domain",
+          "scale": {
+            "domain": [
+              "Land (terrestrial)",
+              "Sea (marine)"
+            ],
+            "range": [
+              "#5f9a52",
+              "#2a6f97"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2012,
+            "pct": 36.4
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#2a6f97",
+        "strokeDash": [
+          3,
+          3
+        ],
+        "strokeWidth": 1.2,
+        "opacity": 0.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x1": 2012,
+            "y1": 35.4,
+            "x2": 2015.4,
+            "y2": 16,
+            "c": "#2a6f97"
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1,
+        "opacity": 0.55
+      },
+      "encoding": {
+        "x": {
+          "field": "x1",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y1",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "x2"
+        },
+        "y2": {
+          "field": "y2"
+        },
+        "color": {
+          "field": "c",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2015.4,
+            "yt": 16,
+            "yb": 1.5
+          }
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "width": 196,
+        "cornerRadius": 8,
+        "fill": "#ffffff",
+        "stroke": "#2a6f97",
+        "strokeWidth": 1.2,
+        "opacity": 0.97
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "yt",
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "yb"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2015.4,
+            "y": 12.6,
+            "t": "2012: the marine leap",
+            "b": true,
+            "col": "#1c5378"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Inter, sans-serif",
+        "align": "center",
+        "fontWeight": 700,
+        "fontSize": 12
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        },
+        "color": {
+          "field": "col",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2015.4,
+            "y": 8.4,
+            "t": "Protected ocean jumped from",
+            "b": false,
+            "col": "#5b5347"
+          },
+          {
+            "x": 2015.4,
+            "y": 4.6,
+            "t": "10% to 36% in a single step.",
+            "b": false,
+            "col": "#5b5347"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Inter, sans-serif",
+        "align": "center",
+        "fontWeight": 400,
+        "fontSize": 10.5
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        },
+        "color": {
+          "field": "col",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x1": 2010.5,
+            "y1": 13.4,
+            "x2": 2007.6,
+            "y2": 41,
+            "c": "#5f9a52"
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1,
+        "opacity": 0.55
+      },
+      "encoding": {
+        "x": {
+          "field": "x1",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y1",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "x2"
+        },
+        "y2": {
+          "field": "y2"
+        },
+        "color": {
+          "field": "c",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2007.6,
+            "yt": 53.5,
+            "yb": 41
+          }
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "width": 190,
+        "cornerRadius": 8,
+        "fill": "#ffffff",
+        "stroke": "#5f9a52",
+        "strokeWidth": 1.2,
+        "opacity": 0.97
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "yt",
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "yb"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2007.6,
+            "y": 50.4,
+            "t": "A steady climb on land",
+            "b": true,
+            "col": "#356b3c"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Inter, sans-serif",
+        "align": "center",
+        "fontWeight": 700,
+        "fontSize": 12
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        },
+        "color": {
+          "field": "col",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2007.6,
+            "y": 46.4,
+            "t": "Terrestrial protection nearly",
+            "b": false,
+            "col": "#5b5347"
+          },
+          {
+            "x": 2007.6,
+            "y": 42.8,
+            "t": "doubled: 10.5% to 22.6%.",
+            "b": false,
+            "col": "#5b5347"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Inter, sans-serif",
+        "align": "center",
+        "fontWeight": 400,
+        "fontSize": 10.5
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        },
+        "color": {
+          "field": "col",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2024,
+            "pct": 22.6,
+            "label": "22.6%"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -6,
+        "dy": 14,
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#356b3c",
+        "font": "Inter, sans-serif"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2024,
+            "pct": 48.9,
+            "label": "48.9%"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -6,
+        "dy": -10,
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#2a6f97",
+        "font": "Inter, sans-serif"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "hoverPt",
+          "select": {
+            "type": "point",
+            "fields": [
+              "measure",
+              "year"
+            ],
+            "on": "pointerover",
+            "clear": "pointerout",
+            "nearest": true
+          }
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "stroke": "#fbf8f0",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "measure",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Land (terrestrial)",
+              "Sea (marine)"
+            ],
+            "range": [
+              "#5f9a52",
+              "#2a6f97"
+            ]
+          },
+          "legend": null
+        },
+        "size": {
+          "condition": {
+            "param": "hoverPt",
+            "empty": false,
+            "value": 200
+          },
+          "value": 50
+        },
+        "tooltip": [
+          {
+            "field": "measure",
+            "title": "Domain"
+          },
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "pct",
+            "title": "Protected (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "hoverX",
+          "select": {
+            "type": "point",
+            "encodings": [
+              "x"
+            ],
+            "on": "pointerover",
+            "clear": "pointerout",
+            "nearest": true
+          }
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "opacity": 0,
+        "size": 0
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "param": "hoverX",
+            "empty": false
+          }
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#5b5347",
+        "strokeWidth": 1.2,
+        "strokeDash": [
+          4,
+          3
+        ],
+        "opacity": 0.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

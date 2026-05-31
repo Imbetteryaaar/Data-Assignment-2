@@ -1,0 +1,300 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "A continent of uneven green",
+    "subtitle": [
+      "Share of land inside protected areas, by state and territory (CAPAD, 2024). The arid,",
+      "lightly populated jurisdictions guard the most land."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 540,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/australia-states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.code",
+          "from": {
+            "data": {
+              "values": [
+                {
+                  "code": "NSW",
+                  "pct": 10.4
+                },
+                {
+                  "code": "VIC",
+                  "pct": 17.6
+                },
+                {
+                  "code": "QLD",
+                  "pct": 9.4
+                },
+                {
+                  "code": "SA",
+                  "pct": 30.0
+                },
+                {
+                  "code": "WA",
+                  "pct": 31.0
+                },
+                {
+                  "code": "TAS",
+                  "pct": 43.0
+                },
+                {
+                  "code": "NT",
+                  "pct": 24.8
+                }
+              ]
+            },
+            "key": "code",
+            "fields": [
+              "pct"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#fbf8f0",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "color": {
+          "field": "pct",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              56
+            ],
+            "range": [
+              "#eef3e7",
+              "#cfe0b8",
+              "#9cc079",
+              "#5f9a52",
+              "#356b3c",
+              "#1d4a2a"
+            ]
+          },
+          "title": "% of land protected",
+          "legend": {
+            "orient": "bottom-left",
+            "gradientLength": 150,
+            "format": ".0f"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "properties.state",
+            "title": "State / territory"
+          },
+          {
+            "field": "pct",
+            "type": "quantitative",
+            "title": "Land protected (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": 146.8,
+            "lat": -32.3,
+            "code": "NSW"
+          },
+          {
+            "lon": 144.0,
+            "lat": -36.6,
+            "code": "VIC"
+          },
+          {
+            "lon": 144.4,
+            "lat": -22.6,
+            "code": "QLD"
+          },
+          {
+            "lon": 135.4,
+            "lat": -30.0,
+            "code": "SA"
+          },
+          {
+            "lon": 121.6,
+            "lat": -25.6,
+            "code": "WA"
+          },
+          {
+            "lon": 146.7,
+            "lat": -42.0,
+            "code": "TAS"
+          },
+          {
+            "lon": 133.4,
+            "lat": -19.6,
+            "code": "NT"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Inter, sans-serif",
+        "fontSize": 11.5,
+        "fontWeight": 700,
+        "color": "#2c2820"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon"
+        },
+        "latitude": {
+          "field": "lat"
+        },
+        "text": {
+          "field": "code",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": 149.0,
+            "lat": -35.5,
+            "pct": 56.0
+          }
+        ]
+      },
+      "mark": {
+        "type": "point",
+        "shape": "diamond",
+        "size": 150,
+        "stroke": "#2c2820",
+        "strokeWidth": 1,
+        "filled": true
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon"
+        },
+        "latitude": {
+          "field": "lat"
+        },
+        "color": {
+          "field": "pct",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              56
+            ],
+            "range": [
+              "#eef3e7",
+              "#cfe0b8",
+              "#9cc079",
+              "#5f9a52",
+              "#356b3c",
+              "#1d4a2a"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": 150.1,
+            "lat": -35.5,
+            "label": "ACT  56% highest in Australia"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Inter, sans-serif",
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#1d4a2a",
+        "align": "left",
+        "dx": 6
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon"
+        },
+        "latitude": {
+          "field": "lat"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

@@ -1,0 +1,365 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The breadth of the threat",
+    "subtitle": [
+      "Australia's threatened species under the EPBC Act, by taxonomic group and threat level.",
+      "Click a bar segment or legend entry to highlight that threat level."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "values": [
+      {
+        "group": "Plants",
+        "status": "Critically Endangered",
+        "count": 186,
+        "order": 1
+      },
+      {
+        "group": "Plants",
+        "status": "Endangered",
+        "count": 577,
+        "order": 1
+      },
+      {
+        "group": "Plants",
+        "status": "Vulnerable",
+        "count": 639,
+        "order": 1
+      },
+      {
+        "group": "Invertebrates",
+        "status": "Critically Endangered",
+        "count": 20,
+        "order": 2
+      },
+      {
+        "group": "Invertebrates",
+        "status": "Endangered",
+        "count": 48,
+        "order": 2
+      },
+      {
+        "group": "Invertebrates",
+        "status": "Vulnerable",
+        "count": 44,
+        "order": 2
+      },
+      {
+        "group": "Birds",
+        "status": "Critically Endangered",
+        "count": 22,
+        "order": 3
+      },
+      {
+        "group": "Birds",
+        "status": "Endangered",
+        "count": 58,
+        "order": 3
+      },
+      {
+        "group": "Birds",
+        "status": "Vulnerable",
+        "count": 62,
+        "order": 3
+      },
+      {
+        "group": "Mammals",
+        "status": "Critically Endangered",
+        "count": 15,
+        "order": 4
+      },
+      {
+        "group": "Mammals",
+        "status": "Endangered",
+        "count": 35,
+        "order": 4
+      },
+      {
+        "group": "Mammals",
+        "status": "Vulnerable",
+        "count": 39,
+        "order": 4
+      },
+      {
+        "group": "Reptiles",
+        "status": "Critically Endangered",
+        "count": 8,
+        "order": 5
+      },
+      {
+        "group": "Reptiles",
+        "status": "Endangered",
+        "count": 22,
+        "order": 5
+      },
+      {
+        "group": "Reptiles",
+        "status": "Vulnerable",
+        "count": 39,
+        "order": 5
+      },
+      {
+        "group": "Fish",
+        "status": "Critically Endangered",
+        "count": 7,
+        "order": 6
+      },
+      {
+        "group": "Fish",
+        "status": "Endangered",
+        "count": 18,
+        "order": 6
+      },
+      {
+        "group": "Fish",
+        "status": "Vulnerable",
+        "count": 25,
+        "order": 6
+      },
+      {
+        "group": "Amphibians",
+        "status": "Critically Endangered",
+        "count": 12,
+        "order": 7
+      },
+      {
+        "group": "Amphibians",
+        "status": "Endangered",
+        "count": 19,
+        "order": 7
+      },
+      {
+        "group": "Amphibians",
+        "status": "Vulnerable",
+        "count": 12,
+        "order": 7
+      }
+    ]
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "selectedStatus",
+          "select": {
+            "type": "point",
+            "fields": [
+              "status"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "bar",
+        "height": {
+          "band": 0.72
+        },
+        "cornerRadiusEnd": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "group",
+          "type": "nominal",
+          "title": null,
+          "sort": {
+            "field": "order",
+            "order": "ascending"
+          },
+          "axis": {
+            "labelFontSize": 12,
+            "labelFontWeight": 600
+          }
+        },
+        "x": {
+          "field": "count",
+          "type": "quantitative",
+          "title": "Number of threatened species",
+          "stack": "zero",
+          "axis": {
+            "format": "d"
+          }
+        },
+        "color": {
+          "field": "status",
+          "type": "nominal",
+          "title": "Threat level — click to highlight",
+          "sort": [
+            "Critically Endangered",
+            "Endangered",
+            "Vulnerable"
+          ],
+          "scale": {
+            "domain": [
+              "Critically Endangered",
+              "Endangered",
+              "Vulnerable"
+            ],
+            "range": [
+              "#7b1c1c",
+              "#c0392b",
+              "#e3b23c"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        },
+        "order": {
+          "field": "status",
+          "sort": [
+            "Critically Endangered",
+            "Endangered",
+            "Vulnerable"
+          ]
+        },
+        "opacity": {
+          "condition": {
+            "param": "selectedStatus",
+            "empty": true,
+            "value": 1
+          },
+          "value": 0.12
+        },
+        "tooltip": [
+          {
+            "field": "group",
+            "title": "Group"
+          },
+          {
+            "field": "status",
+            "title": "Threat level"
+          },
+          {
+            "field": "count",
+            "title": "Species listed",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "count",
+              "as": "total"
+            }
+          ],
+          "groupby": [
+            "group",
+            "order"
+          ]
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 6,
+        "fontSize": 10.5,
+        "fontWeight": 700,
+        "color": "#2c2820",
+        "font": "Inter, sans-serif"
+      },
+      "encoding": {
+        "y": {
+          "field": "group",
+          "type": "nominal",
+          "sort": {
+            "field": "order",
+            "order": "ascending"
+          }
+        },
+        "x": {
+          "field": "total",
+          "type": "quantitative",
+          "stack": null
+        },
+        "text": {
+          "field": "total",
+          "type": "quantitative",
+          "format": ","
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "v": 2107,
+            "label": "2,107 species total"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -4,
+        "dy": -8,
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#7b1c1c",
+        "font": "Inter, sans-serif"
+      },
+      "encoding": {
+        "x": {
+          "field": "v",
+          "type": "quantitative"
+        },
+        "y": {
+          "datum": "Plants"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

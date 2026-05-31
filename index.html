@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Australia's Wild Quarter A Data Visualisation of National Parks &amp; Protected Nature</title>
+<meta name="description" content="A data story about Australia's national parks and protected areas, built with Vega-Lite for FIT2179 Data Visualisation 2, Monash University." />
+<meta name="author" content="Gaurav Agarwal 34380884 Monash University FIT2179" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Vega-Lite rendering libraries (from cdnjs, permitted CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vega/5.25.0/vega.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/5.16.3/vega-lite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/6.24.0/vega-embed.min.js"></script>
+
+<style>
+  :root{
+    --paper:#fbf8f0; --paper-2:#f3eee0; --ink:#2c2820; --ink-soft:#5b5347;
+    --ink-faint:#8a8270; --line:#e4ddcc;
+    --green-d:#1d4a2a; --green:#356b3c; --green-m:#5f9a52; --green-l:#9cc079;
+    --earth:#bc6c25; --rust:#a23b2e; --sky:#2a6f97;
+    --maxw:1320px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces','Georgia',serif; font-weight:600; line-height:1.18;}
+  a{color:var(--green);}
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,248,240,0.94); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .inner{
+    max-width:var(--maxw); margin:0 auto; padding:10px 26px;
+    display:flex; align-items:center; justify-content:space-between; gap:18px;
+  }
+  .brand{font-family:'Fraunces',serif; font-weight:700; font-size:16px; color:var(--green-d);}
+  .brand .leaf{color:var(--green-m);}
+  .topnav{display:flex; gap:20px; flex-wrap:wrap;}
+  .topnav a{
+    color:var(--ink-soft); text-decoration:none; font-size:13px;
+    font-weight:600; letter-spacing:.02em;
+  }
+  .topnav a:hover{color:var(--green);}
+
+  /* ---- hero ---- */
+  .hero{
+    background:linear-gradient(165deg,#274d2c 0%,#1d4a2a 55%,#16331f 100%);
+    color:#eef3e7;
+  }
+  .hero .inner{max-width:var(--maxw); margin:0 auto; padding:74px 26px 60px;}
+  .eyebrow{
+    font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.18em;
+    text-transform:uppercase; font-size:12px; color:var(--green-l);
+  }
+  .hero h1{
+    font-size:clamp(2.5rem,6vw,4.6rem); margin:.18em 0 .12em;
+    color:#fbf8f0; font-weight:600; letter-spacing:-.01em;
+  }
+  .hero .lede{
+    font-size:clamp(1.05rem,2vw,1.3rem); max-width:40ch;
+    color:#d6e2cf; line-height:1.55;
+  }
+  .byline{
+    margin-top:26px; font-size:13.5px; color:#a9bfa2; letter-spacing:.01em;
+  }
+  .byline strong{color:#e8efe1; font-weight:600;}
+
+  /* ---- KPI tiles ---- */
+  .kpis{
+    max-width:var(--maxw); margin:-38px auto 0; padding:0 26px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+    position:relative; z-index:5;
+  }
+  .kpi{
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:20px 20px 18px; box-shadow:0 10px 26px -18px rgba(40,35,20,.5);
+  }
+  .kpi .num{
+    font-family:'Fraunces',serif; font-weight:700; font-size:2.35rem;
+    color:var(--green-d); line-height:1;
+  }
+  .kpi .lab{margin-top:7px; font-size:13px; color:var(--ink-soft); line-height:1.4;}
+
+  /* ---- layout ---- */
+  main{max-width:var(--maxw); margin:0 auto; padding:0 26px;}
+  section{padding:58px 0 12px; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-no{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:12px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--earth);
+  }
+  section h2{font-size:clamp(1.7rem,3.4vw,2.5rem); margin:.16em 0 .35em; max-width:20ch;}
+  .prose{max-width:65ch;}
+  .prose p{margin:.7em 0;}
+  .prose .pull{
+    font-family:'Fraunces',serif; font-size:1.15rem; color:var(--green-d);
+    font-weight:500;
+  }
+
+  /* ---- chart figures ---- */
+  .grid{
+    display:grid; gap:26px; margin-top:30px;
+    grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+  }
+  .viz{
+    margin:30px 0 0; background:#fff; border:1px solid var(--line);
+    border-radius:14px; padding:20px 20px 16px;
+    box-shadow:0 10px 30px -24px rgba(40,35,20,.55);
+  }
+  .viz.full{margin-top:30px;}
+  /* scroll-reveal: only active once JS adds .reveal-ready (no-JS shows everything) */
+  .reveal-ready .viz{
+    opacity:0; transform:translateY(22px);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+    will-change:opacity,transform;
+  }
+  .reveal-ready .viz.is-visible{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .reveal-ready .viz{opacity:1 !important; transform:none !important; transition:none;}
+  }
+  .chart{width:100%; min-height:60px;}
+  .chart svg{max-width:100%; height:auto;}
+  figcaption{
+    margin-top:12px; padding-top:11px; border-top:1px dashed var(--line);
+    font-size:12.5px; color:var(--ink-soft); line-height:1.5;
+  }
+  figcaption .tag{
+    display:inline-block; font-weight:700; color:var(--green-d);
+    margin-right:6px;
+  }
+  figcaption .src{color:var(--ink-faint);}
+  .loading{
+    color:var(--ink-faint); font-size:13px; padding:40px 0; text-align:center;
+  }
+
+  /* ---- callout / about ---- */
+  .callout{
+    background:var(--paper-2); border:1px solid var(--line);
+    border-left:4px solid var(--green-m); border-radius:10px;
+    padding:18px 22px; margin:26px 0 4px; max-width:70ch;
+  }
+  .callout h3{font-size:1.05rem; margin:0 0 .3em; color:var(--green-d);}
+  .callout p{margin:.4em 0; font-size:14.5px; color:var(--ink-soft);}
+
+  .frame-grid{
+    display:grid; gap:16px; margin-top:22px;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  }
+  .frame{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px;
+  }
+  .frame h3{font-size:1rem; color:var(--earth); margin:0 0 .35em;}
+  .frame p{font-size:13.5px; color:var(--ink-soft); margin:0; line-height:1.55;}
+
+  /* ---- footer ---- */
+  footer{
+    background:#1d4a2a; color:#cdd9c6; margin-top:10px;
+    font-size:13.5px; line-height:1.6;
+  }
+  footer .inner{max-width:var(--maxw); margin:0 auto; padding:46px 26px 54px;}
+  footer h3{color:#fbf8f0; font-size:1rem; margin:0 0 .5em;}
+  footer a{color:#bcd3b3;}
+  footer .cols{
+    display:grid; gap:30px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  }
+  footer ul{margin:.2em 0; padding-left:18px;}
+  footer li{margin:.28em 0;}
+  .foot-meta{
+    margin-top:34px; padding-top:20px; border-top:1px solid #2f5e3a;
+    font-size:12.5px; color:#9fb597;
+  }
+
+  @media (max-width:760px){
+    body{font-size:16px;}
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .hero .inner{padding:54px 22px 52px;}
+    main{padding:0 18px;}
+    .topnav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+  <div class="inner">
+    <div class="brand"><span class="leaf">&#9650;</span> Australia's Wild Quarter</div>
+    <nav class="topnav">
+      <a href="#map">The Map</a>
+      <a href="#growth">Growth</a>
+      <a href="#giants">Biggest Parks</a>
+      <a href="#people">Visitors</a>
+      <a href="#nature">Wildlife</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="inner">
+    <div class="eyebrow">Nature &amp; National Parks &middot; A Data Story</div>
+    <h1>Australia's Wild Quarter</h1>
+
+    <p class="lede">A young country has quietly placed almost a quarter of its land and half of its ocean under protection. This is the story of how, and where the gaps remain.</p>
+    <div class="byline">
+      An interactive visualisation by <strong>Gaurav</strong> &middot; Monash University, FIT2179 Data Visualisation 2 &middot; May 2026
+    </div>
+  </div>
+</header>
+
+<!-- ================= KPI TILES ================= -->
+<div class="kpis">
+  <div class="kpi"><div class="num">22.6%</div><div class="lab">of Australia's land was inside protected areas in 2024</div></div>
+  <div class="kpi"><div class="num">49%</div><div class="lab">of Australia's oceans are now marine protected areas</div></div>
+  <div class="kpi"><div class="num">600+</div><div class="lab">national parks span every state and territory</div></div>
+  <div class="kpi"><div class="num">1879</div><div class="lab">Royal National Park: the world's second national park</div></div>
+</div>
+
+<main>
+
+  <!-- ===== INTRO ===== -->
+  <section id="intro">
+    <div class="sec-no">Introduction</div>
+    <h2>Protecting a continent, one park at a time</h2>
+    <div class="prose">
+      <p>National parks are where Australians meet their own country: the desert ranges, rainforest gorges, alpine meadows and rugged coasts that define the place. They are also a promise a decision to keep parts of the continent wild for the species that live there and the people who come after us.</p>
+      <p>That promise has grown remarkably fast. In 2004, barely a tenth of Australia's land was protected. Today it is more than a fifth, and the country has pledged to reach <strong>30% by 2030</strong>. Yet the green is spread unevenly: some states shelter nearly half their land, others less than a tenth.</p>
+      <p class="pull">This visualisation follows that green across the map, back through time, and into the parks themselves who looks after them, who visits them, and what they are racing to save.</p>
+    </div>
+  </section>
+
+  <!-- ===== 01 MAP ===== -->
+  <section id="map">
+    <div class="sec-no">Part One &middot; The Map</div>
+    <h2>A continent of uneven green</h2>
+    <div class="prose">
+      <p>Protected land is not shared equally. The Australian Capital Territory leads the nation, with <strong>56%</strong> of its small footprint protected, followed by Tasmania (43%) and the vast, arid west and centre. The fertile, heavily farmed east tells the opposite story: Queensland and New South Wales each protect under 11% of their land.</p>
+      <p>Hover over any state to read its exact figure. The pattern is clear: the more a landscape is wanted for farming and cities, the harder it is to protect.</p>
+    </div>
+    <figure class="viz full">
+      <div class="chart" id="c01"><div class="loading">Loading map&hellip;</div></div>
+      <figcaption><span class="tag">How to read it</span>Darker greens mark a higher share of land protected. The Australian Capital Territory is too small to shade and is shown as a labelled marker. <span class="src">Source: Collaborative Australian Protected Areas Database (CAPAD), DCCEEW, 2024.</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== 02 + 03 GROWTH ===== -->
+  <section id="growth">
+    <div class="sec-no">Part Two &middot; The Climb</div>
+    <h2>Two decades of rapid protection</h2>
+    <div class="prose">
+      <p>The growth has been steep. Since 2004 the protected share of Australia's land has doubled, while marine protection leapt even faster from a tenth of the ocean to almost half. A run of large additions in 2012 and again after 2020 reshaped the seas around the continent.</p>
+      <p>On land, the climb has been steadier. At 22.6% in 2024, Australia sits a little over halfway to its 2030 target of protecting 30% of its landmass.</p>
+    </div>
+    <div class="grid">
+      <figure class="viz">
+        <div class="chart" id="c02"><div class="loading">Loading chart&hellip;</div></div>
+        <figcaption><span class="tag">Land &amp; sea</span>Marine protection now outpaces protection on land. Hover anywhere on the chart — a crosshair snaps to the nearest year and shows both values. <span class="src">Source: ABS, "Protected areas", 2025, drawing on CAPAD.</span></figcaption>
+      </figure>
+      <figure class="viz">
+        <div class="chart" id="c03"><div class="loading">Loading chart&hellip;</div></div>
+        <figcaption><span class="tag">The 2030 promise</span>The dashed line marks the national 30%-by-2030 commitment. <span class="src">Source: ABS / CAPAD, 2025.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 04 DRIVERS ===== -->
+  <section id="drivers">
+    <div class="sec-no">Part Three &middot; The Custodians</div>
+    <h2>Who is doing the protecting?</h2>
+    <div class="prose">
+      <p>Behind the headline numbers is a quieter shift. Much of the new protected land is not a conventional national park at all, but an <strong>Indigenous Protected Area</strong> Country managed by Aboriginal and Torres Strait Islander groups according to their own objectives, and counted as part of the National Reserve System.</p>
+      <p>In 2004 these areas covered just 2% of the continent. Twenty years on they cover 11%, the single largest driver of Australia's expanding reserve system. Each shaded band traces one biennial CAPAD release, updated every two years, giving a detailed picture of how and when the expansion happened.</p>
+    </div>
+    <figure class="viz full">
+      <div class="chart" id="c04"><div class="loading">Loading chart&hellip;</div></div>
+      <figcaption><span class="tag">A growing role</span>Stacked area shows the share of Australia's land under each protection type at every CAPAD biennial release, 2004–2024. <strong>Drag the slider</strong> below the chart to watch how protection grew year by year. The dashed line marks the national 30%-by-2030 target. <span class="src">Source: ABS / CAPAD; DCCEEW, Indigenous Protected Areas.</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== 05 + 06 GIANTS ===== -->
+  <section id="giants">
+    <div class="sec-no">Part Four &middot; The Giants</div>
+    <h2>The ten largest national parks</h2>
+    <div class="prose">
+      <p>Australia's biggest parks are almost unimaginably large. Munga-Thirri&ndash;Simpson Desert National Park in South Australia covers 36,000&nbsp;km&sup2; bigger than Belgium. Kakadu, the country's best-known wilderness, is a distant second.</p>
+      <p>Notice where they sit. The giants are clustered in the arid interior and the tropical north, far from the coastal cities exactly the land that few people want for anything else.</p>
+    </div>
+    <figure class="viz full">
+      <div class="chart" id="c05"><div class="loading">Loading chart&hellip;</div></div>
+      <figcaption><span class="tag">By area</span>The ten largest national parks, ranked from largest to smallest. <span class="src">Source: Parks Australia &amp; state park agencies, 2025.</span></figcaption>
+    </figure>
+    <figure class="viz full">
+      <div class="chart" id="c06"><div class="loading">Loading map&hellip;</div></div>
+      <figcaption><span class="tag">By place</span>The same ten parks, mapped and sized by area at their approximate centre. Circles cluster in the arid interior and tropical north far from the coastal cities. Hover any park to focus it. <span class="src">Source: Parks Australia &amp; state park agencies, 2025.</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== 07 + 13 HISTORY ===== -->
+  <section id="history">
+    <div class="sec-no">Part Five &middot; The History</div>
+    <h2>A protection habit, more than a century old</h2>
+    <div class="prose">
+      <p>Australia took to national parks early. Royal National Park, south of Sydney, was reserved in 1879 the second national park anywhere in the world, after Yellowstone. A scatter of others followed before 1920.</p>
+      <p>But the real surge came much later. The environmental movement of the 1970s and 1980s turned a habit into a wave: more well-known parks were established in the 1980s than in any decade before or since.</p>
+    </div>
+    <div class="grid">
+      <figure class="viz">
+        <div class="chart" id="c07"><div class="loading">Loading chart&hellip;</div></div>
+        <figcaption><span class="tag">The pioneers</span>Ten of the oldest national parks and the year each was first reserved. <span class="src">Source: National Museum of Australia; state park agencies.</span></figcaption>
+      </figure>
+      <figure class="viz">
+        <div class="chart" id="c13"><div class="loading">Loading chart&hellip;</div></div>
+        <figcaption><span class="tag">The boom</span>Decade of establishment for 31 well-known national parks. <span class="src">Source: state park agencies, compiled 2025.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 08 + 09 + 10 PEOPLE ===== -->
+  <section id="people">
+    <div class="sec-no">Part Six &middot; The Visitors</div>
+    <h2>A nation that loves its parks</h2>
+    <div class="prose">
+      <p>Protected land is not locked away. Australians pour into it. New South Wales alone recorded a remarkable <strong>65.6 million</strong> domestic visits to its national parks in 2024–25, a new record. But the road there was turbulent: the Black Summer bushfires (2019–20) and COVID-19 lockdowns slashed visits to barely half the normal rate, before a steady recovery led to back-to-back records.</p>
+      <p>Visitors are not only locals: almost three-quarters of overseas tourists to NSW now spend time in a national park. And the crowds concentrate. Four of the five busiest parks sit on Sydney's doorstep.</p>
+    </div>
+    <figure class="viz full">
+      <div class="chart" id="c08"><div class="loading">Loading chart&hellip;</div></div>
+      <figcaption><span class="tag">The comeback</span>Domestic visits to NSW national parks by financial year. Bars are colour-coded: green = normal years, amber = decline, red = disrupted (fires &amp; COVID), light green = recovery, dark green = record. The dashed rule marks the previous 2018 record (60M). <span class="src">Source: NSW National Parks &amp; Wildlife Service, 2025.</span></figcaption>
+    </figure>
+    <div class="grid">
+      <figure class="viz">
+        <div class="chart" id="c09"><div class="loading">Loading chart&hellip;</div></div>
+        <figcaption><span class="tag">Who visits</span>NSW park visits in 2024&ndash;25, by visitor type. Each square is 1% of the 70.2M annual visits &ndash; only 7 in 100 come from international visitors. <span class="src">Source: NSW National Parks &amp; Wildlife Service, 2025.</span></figcaption>
+      </figure>
+      <figure class="viz">
+        <div class="chart" id="c10"><div class="loading">Loading chart&hellip;</div></div>
+        <figcaption><span class="tag">The favourites</span>The five most-visited national parks in New South Wales, 2024&ndash;25. <span class="src">Source: NSW National Parks &amp; Wildlife Service, 2025.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 11 ICONS ===== -->
+  <section id="icons">
+    <div class="sec-no">Part Seven &middot; The Icons</div>
+    <h2>The long road back to 2019</h2>
+    <div class="prose">
+      <p>Not every famous park is booming. The Northern Territory's two flagship parks (both jointly managed with their Traditional Owners and both on the World Heritage list) tell a story of COVID collapse and uneven recovery. To compare them fairly despite their different sizes, each park's visitor numbers are indexed to its own pre-COVID (2019) peak: <strong>100% means a full return to 2019 levels</strong>.</p>
+      <p>Both crashed below a third of normal in 2021. From there their paths split. Uluru-Kata Tjuta clawed back to <strong>97%</strong> as domestic road-trips returned. Kakadu's recovery stalled at <strong>83%</strong> and even slipped in 2024, reflecting its heavier reliance on overseas drive tourists who have been slower to come back. For remote parks that live on long-haul visitors, these swings shape the budgets and jobs of whole communities.</p>
+    </div>
+    <figure class="viz full">
+      <div class="chart" id="c11"><div class="loading">Loading chart&hellip;</div></div>
+      <figcaption><span class="tag">Indexed recovery</span>Each line shows annual visitors as a share of that park's own 2019 peak (100% = full recovery). Callout boxes mark the 2021 trough and each park's 2024 standing; hover any year for the underlying visitor count and what happened. <span class="src">Source: Parks Australia visitor data, 2019–2024.</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== 12 NATURE ===== -->
+  <section id="nature">
+    <div class="sec-no">Part Eight &middot; The Reason</div>
+    <h2>What the parks are racing to save</h2>
+    <div class="prose">
+      <p>In the end, protected areas exist for the living things inside them. Australia is one of the most biologically distinctive places on Earth, and one of the most under pressure. More than <strong>2,100 species</strong> are now listed as threatened under national environment law.</p>
+      <p>Plants make up the largest share of that list, with 1,402 species across all threat levels. But the losses cut across every major group: mammals, birds, amphibians, fish, reptiles, and invertebrates. The chart below breaks the full list down by taxonomic group and by the three official threat levels: Critically Endangered, Endangered, and Vulnerable. Every well-placed park is a piece of the safety net.</p>
+    </div>
+    <figure class="viz full">
+      <div class="chart" id="c12"><div class="loading">Loading chart&hellip;</div></div>
+      <figcaption><span class="tag">The stakes</span>Stacked bars show species listed as Critically Endangered, Endangered, or Vulnerable under the EPBC Act, by taxonomic group. Numbers at bar ends show each group's total. <strong>Click any bar segment or legend entry</strong> to highlight that threat level across all groups; click again to reset. <span class="src">Source: DCCEEW, EPBC Act threatened species list, 2024.</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== CONCLUSION ===== -->
+  <section id="conclusion">
+    <div class="sec-no">In Closing</div>
+    <h2>Halfway up the mountain</h2>
+    <div class="prose">
+      <p>Australia's protected estate is a genuine national achievement, doubled in a generation, increasingly led by Indigenous custodians, and loved by tens of millions of visitors a year. But the map still has thin spots exactly where life is busiest, and the 30%-by-2030 target is not yet won.</p>
+      <p class="pull">The wild quarter is not a finished thing. It is a promise still being kept.</p>
+    </div>
+
+    <div class="callout" id="about">
+      <h3>About this visualisation</h3>
+      <p>This data story was created for <strong>FIT2179 Data Visualisation 2</strong> at Monash University. It uses the <strong>Vega-Lite</strong> grammar of graphics for every chart and map. Each chart's JSON specification is published, human-readable, in the <code>/charts</code> folder of this repository; the map geometry is in <code>/data</code>.</p>
+    </div>
+
+    <div class="frame-grid">
+      <div class="frame"><h3>Why</h3><p>Australians care deeply about national parks but rarely see the national picture: how much is protected, where, and how fast it is changing. This visualisation makes that picture visible.</p></div>
+      <div class="frame"><h3>Who</h3><p>Designed for a general Australian audience: residents, travellers and students curious about the country's natural places. No specialist or statistical knowledge is assumed.</p></div>
+      <div class="frame"><h3>What</h3><p>Real, recent, public data combining two main sources: the Collaborative Australian Protected Areas Database (CAPAD) and national-park visitor statistics, along with biodiversity and park-history data.</p></div>
+      <div class="frame"><h3>How</h3><p>Munzer's framework guided the idioms: choropleth and proportional-symbol maps for spatial tasks, lines and areas for trends, and bar, lollipop and slope charts for comparison and change.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="inner">
+    <div class="cols">
+      <div>
+        <h3>Data sources</h3>
+        <ul>
+          <li>ABS: <a href="https://www.abs.gov.au/statistics/measuring-what-matters/measuring-what-matters-themes-and-indicators/sustainable/protected-areas">Protected areas</a> (2025), based on CAPAD</li>
+          <li>DCCEEW: <a href="https://www.dcceew.gov.au/environment/land/nrs/science/capad">Collaborative Australian Protected Areas Database (CAPAD)</a></li>
+          <li>NSW NPWS: <a href="https://www.environment.nsw.gov.au/news/record-visits-nsw-national-parks-drives-economic-growth-and-regional-jobs">Record visits to NSW national parks</a> (2025)</li>
+          <li>Parks Australia &amp; state park agencies: park areas, history and visitor data</li>
+          <li>DCCEEW: <a href="https://www.dcceew.gov.au/environment/biodiversity/threatened/species">Threatened species under the EPBC Act</a></li>
+          <li>State boundary geometry: world-geojson (Natural Earth derived), simplified by the author</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Method &amp; tools</h3>
+        <p>All charts and maps were built with Vega-Lite 5. The map uses a conic equal-area projection appropriate for Australia. Boundary data was simplified to keep the page fast to load.</p>
+        <p>Each Vega-Lite specification is available, formatted for human readability, in this GitHub repository.</p>
+      </div>
+      <div>
+        <h3>Authorship</h3>
+        <p><strong>Gaurav</strong><br/>Monash University, FIT2179 Data Visualisation 2<br/>Semester 1, 2026 &middot; Published May 2026</p>
+        <p>Released for assessment purposes. You are welcome to reuse the underlying public data with attribution to its original sources.</p>
+      </div>
+    </div>
+    <div class="foot-meta">
+            <strong>Use of AI:</strong> Generative AI tools were used to assist with proofreading and refining narrative text, and with layout and typography decisions for the web page. All data selection, story design, analysis, and visualisation are the author&rsquo;s own work. &nbsp;|&nbsp; Data current as at 2024&ndash;25 where available. &nbsp;|&nbsp; &copy; 2026 Gaurav.
+      </div>
+  </div>
+</footer>
+
+<script>
+  // Embed every Vega-Lite chart from its JSON specification file.
+  var charts = [
+    ["c01","charts/01-protected-area-map.json"],
+    ["c02","charts/02-protected-growth-lines.json"],
+    ["c03","charts/03-terrestrial-area-target.json"],
+    ["c04","charts/04-protection-drivers.json"],
+    ["c05","charts/05-largest-parks-bar.json"],
+    ["c06","charts/06-largest-parks-map.json"],
+    ["c07","charts/07-oldest-parks-timeline.json"],
+    ["c08","charts/08-nsw-visits-column.json"],
+    ["c09","charts/09-visits-donut.json"],
+    ["c10","charts/10-top-parks-lollipop.json"],
+    ["c11","charts/11-recovery-index.json"],
+    ["c12","charts/12-threatened-species-bar.json"],
+    ["c13","charts/13-establishment-decades.json"]
+  ];
+  var embedOpts = { renderer:"svg", actions:false };
+
+  function renderAll(){
+    charts.forEach(function(c){
+      var el = document.getElementById(c[0]);
+      vegaEmbed("#" + c[0], c[1], embedOpts)
+        .then(function(){ el.querySelectorAll(".loading").forEach(function(n){ n.remove(); }); })
+        .catch(function(err){
+          el.innerHTML = '<div class="loading">This chart could not load. Open the page from a web server (for example, GitHub Pages) so the JSON files can be fetched.</div>';
+          console.error(c[1], err);
+        });
+    });
+  }
+  if (window.vegaEmbed) { renderAll(); }
+  else { window.addEventListener("load", renderAll); }
+
+  // Scroll-reveal: figures fade and rise gently as they enter the viewport.
+  (function(){
+    var figs = document.querySelectorAll(".viz");
+    if (!("IntersectionObserver" in window) || !figs.length) return;
+    document.documentElement.classList.add("reveal-ready");
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add("is-visible"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    figs.forEach(function(f){ io.observe(f); });
+    // safety net: reveal everything after load in case observer misses any
+    window.addEventListener("load", function(){
+      setTimeout(function(){ figs.forEach(function(f){ f.classList.add("is-visible"); }); }, 1800);
+    });
+  })();
+</script>
+
+</body>
+</html>

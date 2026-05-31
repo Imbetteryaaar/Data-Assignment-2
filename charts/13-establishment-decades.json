@@ -1,0 +1,199 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The great parks boom",
+    "subtitle": [
+      "Decade of establishment for 31 well-known national",
+      "parks. The 1970s–80s was the peak decade."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "values": [
+      {
+        "decade": "1870s",
+        "count": 1
+      },
+      {
+        "decade": "1890s",
+        "count": 2
+      },
+      {
+        "decade": "1910s",
+        "count": 4
+      },
+      {
+        "decade": "1920s",
+        "count": 1
+      },
+      {
+        "decade": "1930s",
+        "count": 1
+      },
+      {
+        "decade": "1940s",
+        "count": 1
+      },
+      {
+        "decade": "1950s",
+        "count": 2
+      },
+      {
+        "decade": "1960s",
+        "count": 3
+      },
+      {
+        "decade": "1970s",
+        "count": 5
+      },
+      {
+        "decade": "1980s",
+        "count": 8
+      },
+      {
+        "decade": "1990s",
+        "count": 1
+      },
+      {
+        "decade": "2000s",
+        "count": 1
+      },
+      {
+        "decade": "2020s",
+        "count": 1
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "width": {
+          "band": 0.58
+        },
+        "cornerRadiusEnd": 3,
+        "color": "#5f9a52"
+      },
+      "encoding": {
+        "x": {
+          "field": "decade",
+          "type": "nominal",
+          "title": null,
+          "axis": {
+            "labelAngle": -35,
+            "labelFontSize": 10.5
+          }
+        },
+        "y": {
+          "field": "count",
+          "type": "quantitative",
+          "title": "Well-known parks established",
+          "scale": {
+            "domain": [
+              0,
+              9
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "decade",
+            "title": "Decade"
+          },
+          {
+            "field": "count",
+            "title": "Parks established"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -9,
+        "font": "Inter, sans-serif",
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#2c2820"
+      },
+      "encoding": {
+        "x": {
+          "field": "decade",
+          "type": "nominal"
+        },
+        "y": {
+          "field": "count",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "count",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -26,
+        "font": "Inter, sans-serif",
+        "fontSize": 9.5,
+        "fontStyle": "italic",
+        "color": "#356b3c"
+      },
+      "encoding": {
+        "x": {
+          "datum": "1980s"
+        },
+        "y": {
+          "datum": 8
+        },
+        "text": {
+          "value": "Peak decade"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

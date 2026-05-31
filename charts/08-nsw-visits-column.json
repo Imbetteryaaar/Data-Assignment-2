@@ -1,0 +1,514 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "A record-breaking comeback",
+    "subtitle": [
+      "Domestic visits to New South Wales national parks (millions), FY2018 to FY2025. Hover a bar",
+      "for the story behind the year."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 360,
+  "data": {
+    "values": [
+      {
+        "year": "2018",
+        "visits": 60.0,
+        "cat": "Normal",
+        "note": "Previous record — 60M visits"
+      },
+      {
+        "year": "2019",
+        "visits": 54.5,
+        "cat": "Decline",
+        "note": "Drought and early fire risk begins"
+      },
+      {
+        "year": "2020",
+        "visits": 33.0,
+        "cat": "Disrupted",
+        "note": "Black Summer bushfires + first COVID lockdowns"
+      },
+      {
+        "year": "2021",
+        "visits": 41.0,
+        "cat": "Disrupted",
+        "note": "COVID-19 restrictions continued"
+      },
+      {
+        "year": "2022",
+        "visits": 53.3,
+        "cat": "Recovery",
+        "note": "Post-pandemic recovery"
+      },
+      {
+        "year": "2023",
+        "visits": 60.2,
+        "cat": "Recovery",
+        "note": "Near-record levels"
+      },
+      {
+        "year": "2024",
+        "visits": 63.0,
+        "cat": "Recovery",
+        "note": "Continued growth"
+      },
+      {
+        "year": "2025",
+        "visits": 65.6,
+        "cat": "Record",
+        "note": "New record — 65.6M visits"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "hoverBar",
+          "select": {
+            "type": "point",
+            "fields": [
+              "year"
+            ],
+            "on": "pointerover",
+            "clear": "pointerout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "bar",
+        "width": {
+          "band": 0.62
+        },
+        "cornerRadiusEnd": 4
+      },
+      "encoding": {
+        "color": {
+          "field": "cat",
+          "type": "nominal",
+          "title": null,
+          "sort": [
+            "Normal",
+            "Decline",
+            "Disrupted",
+            "Recovery",
+            "Record"
+          ],
+          "scale": {
+            "domain": [
+              "Normal",
+              "Decline",
+              "Disrupted",
+              "Recovery",
+              "Record"
+            ],
+            "range": [
+              "#5f9a52",
+              "#bc6c25",
+              "#a23b2e",
+              "#9cc079",
+              "#1d4a2a"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "hoverBar",
+            "value": 1
+          },
+          "value": 0.82
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "title": "Financial year"
+          },
+          {
+            "field": "visits",
+            "title": "Visits (millions)",
+            "format": ".1f"
+          },
+          {
+            "field": "note",
+            "title": "What happened"
+          }
+        ],
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": null,
+          "axis": {
+            "labelFontSize": 12,
+            "labelFontWeight": 600,
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "visits",
+          "type": "quantitative",
+          "title": "Domestic visits (millions)",
+          "scale": {
+            "domain": [
+              0,
+              78
+            ]
+          },
+          "axis": {
+            "format": ".0f",
+            "values": [
+              0,
+              20,
+              40,
+              60
+            ]
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -9,
+        "font": "Inter, sans-serif",
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#2c2820"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "visits",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "visits",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "ref": 60.0
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#2a6f97",
+        "strokeDash": [
+          4,
+          3
+        ],
+        "strokeWidth": 1.4,
+        "opacity": 0.8
+      },
+      "encoding": {
+        "y": {
+          "field": "ref",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": "2019",
+            "ref": 60.0,
+            "t": "Previous record (60M, 2018)"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 4,
+        "dy": -4,
+        "fontSize": 10,
+        "fontStyle": "italic",
+        "color": "#2a6f97",
+        "font": "Inter, sans-serif"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "ref",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x1": "2021",
+            "y1": 58,
+            "x2": "2020",
+            "y2": 35,
+            "c": "#a23b2e"
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1,
+        "opacity": 0.6
+      },
+      "encoding": {
+        "x": {
+          "field": "x1",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y1",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "x2"
+        },
+        "y2": {
+          "field": "y2"
+        },
+        "color": {
+          "field": "c",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": "2021",
+            "yt": 77,
+            "yb": 58
+          }
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "width": 210,
+        "cornerRadius": 8,
+        "fill": "#ffffff",
+        "stroke": "#a23b2e",
+        "strokeWidth": 1.2,
+        "opacity": 0.97
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "yt",
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "yb"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": "2021",
+            "y": 73,
+            "t": "Black Summer, then COVID"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "font": "Inter, sans-serif",
+        "fontWeight": 700,
+        "fontSize": 12,
+        "color": "#a23b2e"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": "2021",
+            "y": 68,
+            "t": "Bushfires then lockdowns cut"
+          },
+          {
+            "x": "2021",
+            "y": 63,
+            "t": "visits to ~33M — barely half."
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "font": "Inter, sans-serif",
+        "fontWeight": 400,
+        "fontSize": 10.5,
+        "color": "#5b5347"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x1": "2024",
+            "y1": 70,
+            "x2": "2025",
+            "y2": 67,
+            "c": "#1d4a2a"
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1,
+        "opacity": 0.6
+      },
+      "encoding": {
+        "x": {
+          "field": "x1",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y1",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "x2"
+        },
+        "y2": {
+          "field": "y2"
+        },
+        "color": {
+          "field": "c",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": "2024",
+            "y": 73,
+            "t": "New all-time high"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "font": "Inter, sans-serif",
+        "fontWeight": 700,
+        "fontSize": 11.5,
+        "color": "#1d4a2a"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

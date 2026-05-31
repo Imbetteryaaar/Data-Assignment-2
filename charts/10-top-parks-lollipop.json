@@ -1,0 +1,191 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The crowd favourites",
+    "subtitle": [
+      "The five most-visited national parks in NSW, 2024\u201325",
+      "(millions of visits). Four of the five sit on",
+      "Sydney's doorstep."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 280,
+  "data": {
+    "values": [
+      {
+        "park": "Blue Mountains",
+        "visits": 7.8
+      },
+      {
+        "park": "Royal",
+        "visits": 4.9
+      },
+      {
+        "park": "Ku-ring-gai Chase",
+        "visits": 4.3
+      },
+      {
+        "park": "Lane Cove",
+        "visits": 2.4
+      },
+      {
+        "park": "Kosciuszko",
+        "visits": 2.4
+      }
+    ]
+  },
+  "encoding": {
+    "y": {
+      "field": "park",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null,
+      "axis": {
+        "labelFontSize": 12
+      }
+    },
+    "x": {
+      "field": "visits",
+      "type": "quantitative",
+      "title": "Visits (millions)",
+      "scale": {
+        "domain": [
+          0,
+          9
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#9cc079",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x2": {
+          "datum": 0
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 320,
+        "color": "#356b3c",
+        "stroke": "#fbf8f0",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "park",
+            "title": "National park"
+          },
+          {
+            "field": "visits",
+            "title": "Visits (millions)"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "font": "Inter, sans-serif",
+        "fontSize": 9.5,
+        "fontWeight": 700,
+        "color": "#fbf8f0"
+      },
+      "encoding": {
+        "text": {
+          "field": "visits",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 5.35,
+            "y": "Royal",
+            "line": "Blue Mountains alone takes"
+          },
+          {
+            "x": 5.35,
+            "y": "Ku-ring-gai Chase",
+            "line": "over a third of these five parks' visits"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "font": "Inter, sans-serif",
+        "fontSize": 10.5,
+        "fontStyle": "italic",
+        "color": "#7a7263"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "nominal",
+          "sort": null
+        },
+        "text": {
+          "field": "line"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

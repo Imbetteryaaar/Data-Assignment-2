@@ -1,0 +1,281 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The ten giants",
+    "subtitle": [
+      "Australia's largest national parks by area (thousands of km²). Munga-Thirri alone is bigger",
+      "than Belgium."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 380,
+  "data": {
+    "values": [
+      {
+        "park": "Munga-Thirri–Simpson Desert",
+        "state": "SA",
+        "km2": 36000
+      },
+      {
+        "park": "Kakadu",
+        "state": "NT",
+        "km2": 19804
+      },
+      {
+        "park": "Kati Thanda–Lake Eyre",
+        "state": "SA",
+        "km2": 13491
+      },
+      {
+        "park": "Judbarra / Gregory",
+        "state": "NT",
+        "km2": 12882
+      },
+      {
+        "park": "Karlamilyi",
+        "state": "WA",
+        "km2": 12830
+      },
+      {
+        "park": "Witjira",
+        "state": "SA",
+        "km2": 7770
+      },
+      {
+        "park": "Kosciuszko",
+        "state": "NSW",
+        "km2": 6900
+      },
+      {
+        "park": "Alpine",
+        "state": "VIC",
+        "km2": 6474
+      },
+      {
+        "park": "Karijini",
+        "state": "WA",
+        "km2": 6274
+      },
+      {
+        "park": "Southwest",
+        "state": "TAS",
+        "km2": 6183
+      }
+    ]
+  },
+  "transform": [
+    {
+      "calculate": "datum.km2 / 1000",
+      "as": "km2_k"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 3,
+        "height": {
+          "band": 0.72
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "park",
+          "type": "nominal",
+          "title": null,
+          "sort": {
+            "field": "km2",
+            "order": "descending"
+          },
+          "axis": {
+            "labelFontSize": 11.5
+          }
+        },
+        "x": {
+          "field": "km2_k",
+          "type": "quantitative",
+          "title": "Area (thousands of km²)",
+          "axis": {
+            "format": ".0f"
+          }
+        },
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State / territory",
+          "scale": {
+            "domain": [
+              "NSW",
+              "VIC",
+              "QLD",
+              "SA",
+              "WA",
+              "TAS",
+              "NT"
+            ],
+            "range": [
+              "#2a6f97",
+              "#5a8f3c",
+              "#d98c2b",
+              "#a23b2e",
+              "#e3b23c",
+              "#2f7d6f",
+              "#6b4e8f"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "columns": 4
+          }
+        },
+        "tooltip": [
+          {
+            "field": "park",
+            "title": "National park"
+          },
+          {
+            "field": "state",
+            "title": "State / territory"
+          },
+          {
+            "field": "km2",
+            "title": "Area (km²)",
+            "format": ","
+          },
+          {
+            "field": "km2_k",
+            "title": "Area (000 km²)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 6,
+        "fontSize": 10.5,
+        "fontWeight": 600,
+        "color": "#2c2820",
+        "font": "Inter, sans-serif"
+      },
+      "encoding": {
+        "y": {
+          "field": "park",
+          "type": "nominal",
+          "sort": {
+            "field": "km2",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "km2_k",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "km2_k",
+          "type": "quantitative",
+          "format": ".0f"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "ref": 30.53
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#a23b2e",
+        "strokeDash": [
+          5,
+          4
+        ],
+        "strokeWidth": 1.6,
+        "opacity": 0.72
+      },
+      "encoding": {
+        "x": {
+          "field": "ref",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "ref": 30.53,
+            "label": "Belgium"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "dy": -6,
+        "fontSize": 10,
+        "fontStyle": "italic",
+        "color": "#a23b2e",
+        "font": "Inter, sans-serif",
+        "y": 8
+      },
+      "encoding": {
+        "x": {
+          "field": "ref",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Halfway to the 2030 promise",
+    "subtitle": [
+      "Land inside protected areas has doubled since 2004.",
+      "Australia has pledged to protect 30% of its land by",
+      "2030."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 320,
+  "layer": [
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2004,
+            "pct": 10.5
+          },
+          {
+            "year": 2006,
+            "pct": 11.6
+          },
+          {
+            "year": 2008,
+            "pct": 12.8
+          },
+          {
+            "year": 2010,
+            "pct": 13.4
+          },
+          {
+            "year": 2012,
+            "pct": 15.5
+          },
+          {
+            "year": 2014,
+            "pct": 17.9
+          },
+          {
+            "year": 2016,
+            "pct": 19.6
+          },
+          {
+            "year": 2018,
+            "pct": 19.7
+          },
+          {
+            "year": 2020,
+            "pct": 19.8
+          },
+          {
+            "year": 2022,
+            "pct": 22.1
+          },
+          {
+            "year": 2024,
+            "pct": 22.6
+          }
+        ]
+      },
+      "mark": {
+        "type": "area",
+        "line": {
+          "color": "#356b3c",
+          "strokeWidth": 2.5
+        },
+        "color": {
+          "x1": 1,
+          "y1": 1,
+          "x2": 1,
+          "y2": 0,
+          "gradient": "linear",
+          "stops": [
+            {
+              "offset": 0,
+              "color": "#eef3e7"
+            },
+            {
+              "offset": 1,
+              "color": "#9cc079"
+            }
+          ]
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": null,
+          "axis": {
+            "format": "d",
+            "values": [
+              2004,
+              2008,
+              2012,
+              2016,
+              2020,
+              2024
+            ]
+          },
+          "scale": {
+            "domain": [
+              2004,
+              2024
+            ]
+          }
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative",
+          "title": "% of land protected",
+          "scale": {
+            "domain": [
+              0,
+              34
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "pct",
+            "title": "Land protected (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "t": 30
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          6,
+          4
+        ],
+        "color": "#a23b2e",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "y": {
+          "field": "t",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2005,
+            "t": 31,
+            "lab": "2030 target: protect 30% of land"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "font": "Inter, sans-serif",
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#a23b2e"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "t",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "lab",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2024,
+            "pct": 22.6,
+            "lab": "22.6% in 2024"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dy": -12,
+        "font": "Inter, sans-serif",
+        "fontSize": 11,
+        "fontWeight": 700,
+        "color": "#1d4a2a"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "pct",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "lab",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}

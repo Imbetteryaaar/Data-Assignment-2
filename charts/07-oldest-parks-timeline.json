@@ -1,0 +1,287 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Protection began early",
+    "subtitle": [
+      "Ten of the oldest national parks and the year each",
+      "was first reserved."
+    ],
+    "subtitleLineHeight": 16
+  },
+  "width": "container",
+  "height": 330,
+  "data": {
+    "values": [
+      {
+        "park": "Royal",
+        "state": "NSW",
+        "year": 1879
+      },
+      {
+        "park": "Ku-ring-gai Chase",
+        "state": "NSW",
+        "year": 1894
+      },
+      {
+        "park": "Wilsons Promontory",
+        "state": "VIC",
+        "year": 1898
+      },
+      {
+        "park": "Lamington",
+        "state": "QLD",
+        "year": 1915
+      },
+      {
+        "park": "Freycinet",
+        "state": "TAS",
+        "year": 1916
+      },
+      {
+        "park": "Mount Field",
+        "state": "TAS",
+        "year": 1916
+      },
+      {
+        "park": "Flinders Chase",
+        "state": "SA",
+        "year": 1919
+      },
+      {
+        "park": "Cradle Mountain–Lake St Clair",
+        "state": "TAS",
+        "year": 1922
+      },
+      {
+        "park": "Blue Mountains",
+        "state": "NSW",
+        "year": 1959
+      },
+      {
+        "park": "Kosciuszko",
+        "state": "NSW",
+        "year": 1967
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#d2cbbb",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "y": {
+          "field": "park",
+          "type": "nominal",
+          "sort": {
+            "field": "year"
+          },
+          "title": null
+        },
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              1875,
+              1975
+            ]
+          },
+          "title": "Year first protected",
+          "axis": {
+            "format": "d"
+          }
+        },
+        "x2": {
+          "datum": 1875
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 220,
+        "stroke": "#fbf8f0",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "y": {
+          "field": "park",
+          "type": "nominal",
+          "sort": {
+            "field": "year"
+          },
+          "title": null
+        },
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State / territory",
+          "scale": {
+            "domain": [
+              "NSW",
+              "VIC",
+              "QLD",
+              "SA",
+              "WA",
+              "TAS",
+              "NT"
+            ],
+            "range": [
+              "#2a6f97",
+              "#5a8f3c",
+              "#d98c2b",
+              "#a23b2e",
+              "#e3b23c",
+              "#2f7d6f",
+              "#6b4e8f"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "columns": 4
+          }
+        },
+        "tooltip": [
+          {
+            "field": "park",
+            "title": "National park"
+          },
+          {
+            "field": "state",
+            "title": "State / territory"
+          },
+          {
+            "field": "year",
+            "title": "Year protected",
+            "format": "d"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 11,
+        "font": "Inter, sans-serif",
+        "fontSize": 10.5,
+        "color": "#5b5347"
+      },
+      "encoding": {
+        "y": {
+          "field": "park",
+          "type": "nominal",
+          "sort": {
+            "field": "year"
+          }
+        },
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "year",
+          "type": "quantitative",
+          "format": "d"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 11,
+        "dy": -13,
+        "font": "Inter, sans-serif",
+        "fontSize": 9.5,
+        "fontStyle": "italic",
+        "fontWeight": 600,
+        "color": "#2a6f97"
+      },
+      "encoding": {
+        "y": {
+          "datum": "Royal"
+        },
+        "x": {
+          "datum": 1879
+        },
+        "text": {
+          "value": "World's 2nd national park"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -8,
+        "dy": 0,
+        "font": "Inter, sans-serif",
+        "fontSize": 9.5,
+        "fontStyle": "italic",
+        "color": "#2f7d6f"
+      },
+      "encoding": {
+        "y": {
+          "datum": "Cradle Mountain–Lake St Clair"
+        },
+        "x": {
+          "datum": 1922
+        },
+        "text": {
+          "value": "Tasmanian wilderness"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": null,
+    "font": "Inter, sans-serif",
+    "view": {
+      "stroke": null
+    },
+    "padding": 5,
+    "axis": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "titleFontWeight": 600,
+      "gridColor": "#ebe6da",
+      "domainColor": "#d2cbbb",
+      "tickColor": "#d2cbbb",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titlePadding": 8
+    },
+    "legend": {
+      "labelFont": "Inter, sans-serif",
+      "titleFont": "Inter, sans-serif",
+      "labelColor": "#5b5347",
+      "titleColor": "#3a342b",
+      "labelFontSize": 11,
+      "titleFontSize": 11.5
+    },
+    "title": {
+      "font": "Fraunces, serif",
+      "fontSize": 16,
+      "anchor": "start",
+      "color": "#2c2820",
+      "fontWeight": 600,
+      "subtitleFont": "Inter, sans-serif",
+      "subtitleColor": "#7a7263",
+      "subtitleFontSize": 12,
+      "subtitlePadding": 6,
+      "offset": 12
+    }
+  }
+}
